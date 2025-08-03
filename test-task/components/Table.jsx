@@ -31,8 +31,8 @@ export default function Table() {
 
       switch (sortField) {
         case 'name':
-          aValue = `${a.lastName} ${a.firstName} ${a.maidenName}`;
-          bValue = `${b.lastName} ${b.firstName} ${b.maidenName}`;
+          aValue = `${a.firstName} ${a.lastName} ${a.maidenName}`;
+          bValue = `${b.firstName} ${b.lastName} ${b.maidenName}`;
           break;
         case 'age':
           aValue = a.age;
