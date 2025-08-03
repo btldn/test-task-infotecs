@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import styles from './Table.module.css';
 
 export default function Table() {
   const [users, setUsers] = useState([]);
@@ -73,38 +74,40 @@ export default function Table() {
   };
 
   return (
-    <table border="1" cellPadding="8" cellSpacing="0" style={{ width: '100%', borderCollapse: 'collapse' }}>
-      <thead>
-        <tr>
-          <th onClick={() => toggleSort('name')} style={{ cursor: 'pointer' }}>
-            ФИО {sortField === 'name' ? (sortOrder === 'asc' ? '↑' : sortOrder === 'desc' ? '↓' : '') : ''}
-          </th>
-          <th onClick={() => toggleSort('age')} style={{ cursor: 'pointer' }}>
-            Возраст {sortField === 'age' ? (sortOrder === 'asc' ? '↑' : sortOrder === 'desc' ? '↓' : '') : ''}
-          </th>
-          <th onClick={() => toggleSort('gender')} style={{ cursor: 'pointer' }}>
-            Пол {sortField === 'gender' ? (sortOrder === 'asc' ? '↑' : sortOrder === 'desc' ? '↓' : '') : ''}
-          </th>
-          <th onClick={() => toggleSort('phone')} style={{ cursor: 'pointer' }}>
-            Телефон {sortField === 'phone' ? (sortOrder === 'asc' ? '↑' : sortOrder === 'desc' ? '↓' : '') : ''}
-          </th>
-          <th>Email</th>
-          <th>Город</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {sortedUsers.map((user) => (
-          <tr key={user.id}>
-            <td>{`${user.firstName} ${user.lastName}`}</td>
-            <td>{user.age}</td>
-            <td>{user.gender === 'male' ? 'муж.' : 'жен.'}</td>
-            <td>{user.phone}</td>
-            <td>{user.email}</td>
-            <td>{user.address.city}</td>
+    <div className={styles['table-wrapper']}>
+      <table className={styles['table']} border="1" cellPadding="8" cellSpacing="0" >
+        <thead>
+          <tr>
+            <th onClick={() => toggleSort('name')} style={{ cursor: 'pointer' }}>
+              ФИО {sortField === 'name' ? (sortOrder === 'asc' ? '↑' : sortOrder === 'desc' ? '↓' : '') : ''}
+            </th>
+            <th onClick={() => toggleSort('age')} style={{ cursor: 'pointer' }}>
+              Возраст {sortField === 'age' ? (sortOrder === 'asc' ? '↑' : sortOrder === 'desc' ? '↓' : '') : ''}
+            </th>
+            <th onClick={() => toggleSort('gender')} style={{ cursor: 'pointer' }}>
+              Пол {sortField === 'gender' ? (sortOrder === 'asc' ? '↑' : sortOrder === 'desc' ? '↓' : '') : ''}
+            </th>
+            <th onClick={() => toggleSort('phone')} style={{ cursor: 'pointer' }}>
+              Телефон {sortField === 'phone' ? (sortOrder === 'asc' ? '↑' : sortOrder === 'desc' ? '↓' : '') : ''}
+            </th>
+            <th>Email</th>
+            <th>Город</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody>
+          {sortedUsers.map((user) => (
+            <tr key={user.id}>
+              <td>{`${user.firstName} ${user.lastName} ${user.maidenName}`}</td>
+              <td>{user.age}</td>
+              <td>{user.gender === 'male' ? 'муж.' : 'жен.'}</td>
+              <td>{user.phone}</td>
+              <td>{user.email}</td>
+              <td>{user.address.city}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
