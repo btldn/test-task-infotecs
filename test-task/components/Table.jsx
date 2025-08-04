@@ -12,6 +12,9 @@ export default function Table() {
   const [filterText, setFilterText] = useState('');
   const [genderFilter, setGenderFilter] = useState('');
   const [cityFilter, setCityFilter] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 15;
+
 
   useEffect(() => {
     fetch('https://dummyjson.com/users')
@@ -95,26 +98,32 @@ export default function Table() {
     }
   };
 
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedUsers = sortedUsers.slice(startIndex, endIndex);
+
+  console.log(paginatedUsers);
+
   return (
-    <div className={styles['table-wrapper']}>
-      <h1 className={styles['table-title']}>Список пользователей</h1>
-      <div className={styles['table-filters']}>
+    <div className={styles['table__wrapper']}>
+      <h1 className={styles['table__title']}>Список пользователей</h1>
+      <div className={styles['table__filters']}>
         <input
-          className={styles['table-filters__input']}
+          className={styles['table__filters-input']}
           type="text"
           placeholder="Поиск по ФИО"
           value={filterText}
           onChange={(e) => setFilterText(e.target.value)}
         />
 
-        <select className={styles['table-filters__select']} value={genderFilter} onChange={(e) => setGenderFilter(e.target.value)}>
+        <select className={styles['table__filters-select']} value={genderFilter} onChange={(e) => setGenderFilter(e.target.value)}>
           <option value="">Пол (все)</option>
           <option value="male">Мужской</option>
           <option value="female">Женский</option>
         </select>
 
         <input
-          className={styles['table-filters__input']}
+          className={styles['table__filters-input']}
           type="text"
           placeholder="Поиск по городу"
           value={cityFilter}
@@ -143,7 +152,7 @@ export default function Table() {
         </thead>
 
         <tbody>
-          {sortedUsers.map((user) => (
+          {paginatedUsers.map((user) => (
             <tr key={user.id}>
               <td>{`${user.firstName} ${user.lastName} ${user.maidenName}`}</td>
               <td>{user.age}</td>
@@ -155,6 +164,28 @@ export default function Table() {
           ))}
         </tbody>
       </table>
+
+      <div className={styles['table__pagination']} >
+        <button className={styles['table__pagination-button']}
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          ←
+        </button>
+        <span className={styles['table__pagination-label']} >Страница {currentPage}</span>
+        <button className={styles['table__pagination-button']}
+          onClick={() =>
+            setCurrentPage((prev) =>
+              prev < Math.ceil(sortedUsers.length / itemsPerPage) ? prev + 1 : prev
+            )
+          }
+          disabled={currentPage === Math.ceil(sortedUsers.length / itemsPerPage)}
+
+        >
+          →
+        </button>
+      </div>
+
     </div>
   );
 }

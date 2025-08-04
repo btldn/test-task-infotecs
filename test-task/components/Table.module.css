@@ -1,11 +1,11 @@
-.table-wrapper {
+.table__wrapper {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
   overflow-x: auto;
 }
 
-.table-title {
+.table__title {
   font-size: 24px;
   margin-bottom: 10px;
 }
@@ -13,17 +13,37 @@
 .table {
   width: 100%;
   border-collapse: collapse;
+  margin-bottom: 10px;
 }
 
-.table-filters__input {
+.table__filters-input {
   padding: 3px 7px;
   margin-right: 10px;
   margin-bottom: 10px;
 }
 
-.table-filters__select {
+.table__filters-select {
   padding: 3px 7px;
   margin-right: 10px;
   margin-bottom: 10px;
 }
 
+.table__pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table__pagination-button {
+  padding: 3px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.table__pagination-button:disabled {
+  cursor: not-allowed;
+}
+
+.table__pagination-label {
+  margin-right: 5px;
+}
