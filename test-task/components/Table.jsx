@@ -9,6 +9,9 @@ export default function Table() {
   const [error, setError] = useState(null);
   const [sortField, setSortField] = useState(null);
   const [sortOrder, setSortOrder] = useState(null);
+  const [filterText, setFilterText] = useState('');
+  const [genderFilter, setGenderFilter] = useState('');
+  const [cityFilter, setCityFilter] = useState('');
 
   useEffect(() => {
     fetch('https://dummyjson.com/users')
@@ -24,7 +27,26 @@ export default function Table() {
   if (loading) return <p>Загрузка...</p>;
   if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
-  let sortedUsers = [...users];
+  let filteredUsers = [...users];
+
+  if (filterText.trim() !== '') {
+    filteredUsers = filteredUsers.filter((user) => {
+      const fullName = `${user.lastName} ${user.firstName} ${user.maidenName}`.toLowerCase();
+      return fullName.includes(filterText.toLowerCase());
+    });
+  }
+
+  if (genderFilter) {
+    filteredUsers = filteredUsers.filter((user) => user.gender === genderFilter);
+  }
+
+  if (cityFilter.trim() !== '') {
+    filteredUsers = filteredUsers.filter((user) =>
+      user.address.city.toLowerCase().includes(cityFilter.toLowerCase())
+    );
+  }
+
+  let sortedUsers = [...filteredUsers]
 
   if (sortField && sortOrder) {
     sortedUsers.sort((a, b) => {
@@ -32,8 +54,8 @@ export default function Table() {
 
       switch (sortField) {
         case 'name':
-          aValue = `${a.firstName} ${a.lastName} ${a.maidenName}`;
-          bValue = `${b.firstName} ${b.lastName} ${b.maidenName}`;
+          aValue = `${a.lastName} ${a.firstName} ${a.maidenName}`;
+          bValue = `${b.lastName} ${b.firstName} ${b.maidenName}`;
           break;
         case 'age':
           aValue = a.age;
@@ -75,6 +97,31 @@ export default function Table() {
 
   return (
     <div className={styles['table-wrapper']}>
+      <h1 className={styles['table-title']}>Список пользователей</h1>
+      <div className={styles['table-filters']}>
+        <input
+          className={styles['table-filters__input']}
+          type="text"
+          placeholder="Поиск по ФИО"
+          value={filterText}
+          onChange={(e) => setFilterText(e.target.value)}
+        />
+
+        <select className={styles['table-filters__select']} value={genderFilter} onChange={(e) => setGenderFilter(e.target.value)}>
+          <option value="">Пол (все)</option>
+          <option value="male">Мужской</option>
+          <option value="female">Женский</option>
+        </select>
+
+        <input
+          className={styles['table-filters__input']}
+          type="text"
+          placeholder="Поиск по городу"
+          value={cityFilter}
+          onChange={(e) => setCityFilter(e.target.value)}
+        />
+      </div>
+
       <table className={styles['table']} border="1" cellPadding="8" cellSpacing="0" >
         <thead>
           <tr>

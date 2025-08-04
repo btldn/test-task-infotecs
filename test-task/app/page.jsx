@@ -1,11 +1,11 @@
 'use client';
 
 import Table from '../components/Table';
+import './globals.css';
 
 export default function HomePage() {
   return (
     <main>
-      <h1 style={{ fontSize: '24px', marginBottom: '20px' }}>Список пользователей</h1>
       <Table />
     </main>
   );
