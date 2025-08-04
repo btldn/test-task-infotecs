@@ -14,7 +14,7 @@ export default function Table() {
   const [cityFilter, setCityFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15;
-
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     fetch('https://dummyjson.com/users')
@@ -154,7 +154,7 @@ export default function Table() {
 
         <tbody>
           {paginatedUsers.map((user) => (
-            <tr key={user.id}>
+            <tr key={user.id} onClick={() => setSelectedUser(user)}>
               <td>{`${user.firstName} ${user.lastName} ${user.maidenName}`}</td>
               <td>{user.age}</td>
               <td>{user.gender === 'male' ? 'муж.' : 'жен.'}</td>
@@ -166,6 +166,25 @@ export default function Table() {
           ))}
         </tbody>
       </table>
+
+      {selectedUser && (
+        <div className={styles['table__modal-backdrop']} onClick={() => setSelectedUser(null)}>
+          <div className={styles['table__modal']} onClick={(e) => e.stopPropagation()}>
+            <button className={styles['table__modal-close']} onClick={() => setSelectedUser(null)}>×</button>
+            <img className={styles['table__modal-avatar']} src={selectedUser.image} alt="avatar" />
+            <h2 className={styles['table__modal-name']}>{`${selectedUser.firstName} ${selectedUser.lastName} ${selectedUser.maidenName}`}</h2>
+            <p className={styles['table__modal-info']}><b>Возраст: </b>{selectedUser.age}</p>
+            <p className={styles['table__modal-info']}><b>Рост: </b>{selectedUser.height} см</p>
+            <p className={styles['table__modal-info']}><b>Вес: </b>{selectedUser.weight} кг</p>
+            <p className={styles['table__modal-info']}><b>Телефон: </b>{selectedUser.phone}</p>
+            <p className={styles['table__modal-info']}><b>Email: </b>{selectedUser.email}</p>
+            <p className={styles['table__modal-info']}>
+             <b>Адрес: </b>{`${selectedUser.address.country}, ${selectedUser.address.city}, ${selectedUser.address.address}`}
+            </p>
+          </div>
+        </div>
+      )}
+
 
       <div className={styles['table__pagination']} >
         <button className={styles['table__pagination-button']}
