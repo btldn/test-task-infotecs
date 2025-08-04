@@ -147,6 +147,7 @@ export default function Table() {
               Телефон {sortField === 'phone' ? (sortOrder === 'asc' ? '↑' : sortOrder === 'desc' ? '↓' : '') : ''}
             </th>
             <th>Email</th>
+            <th>Страна</th>
             <th>Город</th>
           </tr>
         </thead>
@@ -159,6 +160,7 @@ export default function Table() {
               <td>{user.gender === 'male' ? 'муж.' : 'жен.'}</td>
               <td>{user.phone}</td>
               <td>{user.email}</td>
+              <td>{user.address.country}</td>
               <td>{user.address.city}</td>
             </tr>
           ))}

@@ -1,9 +1,13 @@
 .table__wrapper {
-  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   max-width: 1400px;
+  width: 100%;
   margin: 0 auto;
-  overflow-x: auto;
+  padding: 20px;
 }
+
 
 .table__title {
   font-size: 24px;
@@ -29,9 +33,9 @@
 }
 
 .table__pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin-top: auto;
+  padding: 10px 0;
+  text-align: center;
 }
 
 .table__pagination-button {

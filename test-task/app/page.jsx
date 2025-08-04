@@ -5,8 +5,8 @@ import './globals.css';
 
 export default function HomePage() {
   return (
-    <main>
+    <div className="page__content">
       <Table />
-    </main>
+    </div>
   );
 }
