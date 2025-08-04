@@ -16,6 +16,17 @@ export default function Table() {
   const itemsPerPage = 15;
   const [selectedUser, setSelectedUser] = useState(null);
 
+  const [columnWidths, setColumnWidths] = useState({
+    name: 200,
+    age: 100,
+    gender: 100,
+    phone: 160,
+    email: 220,
+    country: 140,
+    city: 140,
+  });
+
+
   useEffect(() => {
     fetch('https://dummyjson.com/users')
       .then((res) => {
@@ -104,6 +115,30 @@ export default function Table() {
 
   console.log(paginatedUsers);
 
+  const handleMouseDown = (e, columnKey) => {
+    e.preventDefault();
+    const startX = e.clientX;
+    const startWidth = columnWidths[columnKey];
+
+    const handleMouseMove = (moveEvent) => {
+      const deltaX = moveEvent.clientX - startX;
+      const newWidth = Math.max(50, startWidth + deltaX);
+      setColumnWidths((prev) => ({
+        ...prev,
+        [columnKey]: newWidth,
+      }));
+    };
+
+    const handleMouseUp = () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  };
+
+
   return (
     <div className={styles['table__wrapper']}>
       <h1 className={styles['table__title']}>Список пользователей</h1>
@@ -134,37 +169,142 @@ export default function Table() {
       <table className={styles['table']} border="1" cellPadding="8" cellSpacing="0" >
         <thead>
           <tr>
-            <th onClick={() => toggleSort('name')} style={{ cursor: 'pointer' }}>
-              ФИО {sortField === 'name' ? (sortOrder === 'asc' ? '↑' : sortOrder === 'desc' ? '↓' : '') : ''}
+            <th
+              className={styles['table__th']}
+              style={{ width: `${columnWidths.name}px` }}
+            >
+              <div
+                className={styles['table__th-content']}
+                onClick={() => toggleSort('name')}
+                style={{ cursor: 'pointer' }}
+              >
+                ФИО {sortField === 'name' ? (sortOrder === 'asc' ? '↑' : sortOrder === 'desc' ? '↓' : '') : ''}
+              </div>
+              <div
+                className={styles['table__th-resizer']}
+                onMouseDown={(e) => handleMouseDown(e, 'name')}
+              />
             </th>
-            <th onClick={() => toggleSort('age')} style={{ cursor: 'pointer' }}>
-              Возраст {sortField === 'age' ? (sortOrder === 'asc' ? '↑' : sortOrder === 'desc' ? '↓' : '') : ''}
+
+            <th
+              className={styles['table__th']}
+              style={{ width: `${columnWidths.age}px` }}
+            >
+              <div
+                className={styles['table__th-content']}
+                onClick={() => toggleSort('age')}
+                style={{ cursor: 'pointer' }}
+              >
+                Возраст {sortField === 'age' ? (sortOrder === 'asc' ? '↑' : sortOrder === 'desc' ? '↓' : '') : ''}
+              </div>
+              <div
+                className={styles['table__th-resizer']}
+                onMouseDown={(e) => handleMouseDown(e, 'age')}
+              />
             </th>
-            <th onClick={() => toggleSort('gender')} style={{ cursor: 'pointer' }}>
-              Пол {sortField === 'gender' ? (sortOrder === 'asc' ? '↑' : sortOrder === 'desc' ? '↓' : '') : ''}
+
+            <th
+              className={styles['table__th']}
+              style={{ width: `${columnWidths.gender}px` }}
+            >
+              <div
+                className={styles['table__th-content']}
+                onClick={() => toggleSort('gender')}
+                style={{ cursor: 'pointer' }}
+              >
+                Пол {sortField === 'gender' ? (sortOrder === 'asc' ? '↑' : sortOrder === 'desc' ? '↓' : '') : ''}
+              </div>
+              <div
+                className={styles['table__th-resizer']}
+                onMouseDown={(e) => handleMouseDown(e, 'gender')}
+              />
             </th>
-            <th onClick={() => toggleSort('phone')} style={{ cursor: 'pointer' }}>
-              Телефон {sortField === 'phone' ? (sortOrder === 'asc' ? '↑' : sortOrder === 'desc' ? '↓' : '') : ''}
+
+            <th
+              className={styles['table__th']}
+              style={{ width: `${columnWidths.phone}px` }}
+            >
+              <div
+                className={styles['table__th-content']}
+                onClick={() => toggleSort('phone')}
+                style={{ cursor: 'pointer' }}
+              >
+                Телефон {sortField === 'phone' ? (sortOrder === 'asc' ? '↑' : sortOrder === 'desc' ? '↓' : '') : ''}
+              </div>
+              <div
+                className={styles['table__th-resizer']}
+                onMouseDown={(e) => handleMouseDown(e, 'phone')}
+              />
             </th>
-            <th>Email</th>
-            <th>Страна</th>
-            <th>Город</th>
+
+            <th
+              className={styles['table__th']}
+              style={{ width: `${columnWidths.email}px` }}
+            >
+              <div
+                className={styles['table__th-content']}
+                onClick={() => toggleSort('email')}
+                style={{ cursor: 'pointer' }}
+              >
+                Email
+              </div>
+              <div
+                className={styles['table__th-resizer']}
+                onMouseDown={(e) => handleMouseDown(e, 'email')}
+              />
+            </th>
+
+            <th
+              className={styles['table__th']}
+              style={{ width: `${columnWidths.country}px` }}
+            >
+              <div
+                className={styles['table__th-content']}
+                onClick={() => toggleSort('country')}
+                style={{ cursor: 'pointer' }}
+              >
+                Страна
+              </div>
+              <div
+                className={styles['table__th-resizer']}
+                onMouseDown={(e) => handleMouseDown(e, 'country')}
+              />
+            </th>
+
+            <th
+              className={styles['table__th']}
+              style={{ width: `${columnWidths.city}px` }}
+            >
+              <div
+                className={styles['table__th-content']}
+                onClick={() => toggleSort('city')}
+                style={{ cursor: 'pointer' }}
+              >
+                Город
+              </div>
+              <div
+                className={styles['table__th-resizer']}
+                onMouseDown={(e) => handleMouseDown(e, 'city')}
+              />
+            </th>
           </tr>
+
         </thead>
 
         <tbody>
           {paginatedUsers.map((user) => (
-            <tr key={user.id} onClick={() => setSelectedUser(user)}>
-              <td>{`${user.firstName} ${user.lastName} ${user.maidenName}`}</td>
-              <td>{user.age}</td>
-              <td>{user.gender === 'male' ? 'муж.' : 'жен.'}</td>
-              <td>{user.phone}</td>
-              <td>{user.email}</td>
-              <td>{user.address.country}</td>
-              <td>{user.address.city}</td>
+            <tr key={user.id} onClick={() => setSelectedUser(user)} style={{ cursor: 'pointer' }}>
+              <td className={styles['table__td']} style={{ width: columnWidths.name }}>{`${user.firstName} ${user.lastName} ${user.maidenName}`}</td>
+              <td className={styles['table__td']} style={{ width: columnWidths.age }}>{user.age}</td>
+              <td className={styles['table__td']} style={{ width: columnWidths.gender }}>{user.gender === 'male' ? 'муж.' : 'жен.'}</td>
+              <td className={styles['table__td']} style={{ width: columnWidths.phone }}>{user.phone}</td>
+              <td className={styles['table__td']} style={{ width: columnWidths.email }}>{user.email}</td>
+              <td className={styles['table__td']} style={{ width: columnWidths.country }}>{user.address.country}</td>
+              <td className={styles['table__td']} style={{ width: columnWidths.city }}>{user.address.city}</td>
             </tr>
           ))}
         </tbody>
+
       </table>
 
       {selectedUser && (
@@ -179,7 +319,7 @@ export default function Table() {
             <p className={styles['table__modal-info']}><b>Телефон: </b>{selectedUser.phone}</p>
             <p className={styles['table__modal-info']}><b>Email: </b>{selectedUser.email}</p>
             <p className={styles['table__modal-info']}>
-             <b>Адрес: </b>{`${selectedUser.address.country}, ${selectedUser.address.city}, ${selectedUser.address.address}`}
+              <b>Адрес: </b>{`${selectedUser.address.country}, ${selectedUser.address.city}, ${selectedUser.address.address}`}
             </p>
           </div>
         </div>

@@ -8,15 +8,8 @@
   padding: 20px;
 }
 
-
 .table__title {
   font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.table {
-  width: 100%;
-  border-collapse: collapse;
   margin-bottom: 10px;
 }
 
@@ -31,6 +24,43 @@
   margin-right: 10px;
   margin-bottom: 10px;
 }
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+  table-layout: fixed;
+}
+
+.table__th {
+  position: relative;
+}
+
+.table__th-content {
+  display: block;
+  padding-right: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.table__th-resizer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 5px;
+  height: 100%;
+  cursor: col-resize;
+  user-select: none;
+  z-index: 1;
+}
+
+.table__td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 
 .table__pagination {
   margin-top: auto;
