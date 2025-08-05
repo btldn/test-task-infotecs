@@ -122,7 +122,7 @@ export default function Table() {
 
     const handleMouseMove = (moveEvent) => {
       const deltaX = moveEvent.clientX - startX;
-      const newWidth = Math.max(50, startWidth + deltaX);
+      const newWidth = Math.min(Math.max(80, startWidth + deltaX), 300);
       setColumnWidths((prev) => ({
         ...prev,
         [columnKey]: newWidth,
