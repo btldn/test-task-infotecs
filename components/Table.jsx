@@ -15,7 +15,6 @@ export default function Table() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15;
   const [selectedUser, setSelectedUser] = useState(null);
-
   const [columnWidths, setColumnWidths] = useState({
     name: 200,
     age: 100,

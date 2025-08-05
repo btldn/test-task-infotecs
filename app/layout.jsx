@@ -1,5 +1,5 @@
 export const metadata = {
-  title: 'User Table App',
+  title: 'Список пользователей',
   description: 'Тестовое задание с таблицей пользователей',
 };
 

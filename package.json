@@ -1,0 +1,23 @@
+{
+  "name": "test-task",
+  "version": "0.1.0",
+  "homepage": "https://btldn.github.io/test-task-infotecs",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build && next export",
+    "deploy": "gh-pages -d out"
+  },
+  "dependencies": {
+    "next": "15.4.5",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "gh-pages": "^6.3.0",
+    "typescript": "^5"
+  }
+}
